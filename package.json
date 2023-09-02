@@ -2,6 +2,7 @@
   "name": "express",
   "version": "1.0.0",
   "description": "I'm experimenting with Express - Node.js web application framework.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
