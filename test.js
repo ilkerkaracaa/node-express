@@ -21,3 +21,13 @@ BlogPost.create({
   .catch((error) => {
     console.error("Doküman oluşturma hatası:", error);
   });
+
+BlogPost.find({
+  title: /Vay/,
+})
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
