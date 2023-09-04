@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 //const BlogPost = require("./models/BlogPost");
 const fileUpload = require("express-fileupload");
 app.use(fileUpload());
+const expressSession = require("express-session");
 
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
 
@@ -17,6 +18,14 @@ app.use(express.static("public"));
 app.listen(4000, () => {
   console.log("App listening on port 4000");
 });
+
+app.use(
+  expressSession({
+    secret: "keyboard cat",
+  })
+);
+
+const authMiddleware = require("./middleware/authMiddleware");
 
 const validateMiddleware = require("./middleware/validationMiddleware.js");
 //validationMiddleware.js
@@ -64,7 +73,7 @@ app.get("/post/:id", getPostController);
 // });
 
 const newPostController = require("./controllers/newPost");
-app.get("/posts/new", newPostController);
+app.get("/posts/new", authMiddleware, newPostController);
 
 // app.post("/posts/store", (req, res) => {
 //   BlogPost.create(req.body)
@@ -77,7 +86,7 @@ app.get("/posts/new", newPostController);
 // });
 
 const storePostController = require("./controllers/storePost");
-app.post("/posts/store", storePostController);
+app.post("/posts/store", authMiddleware, storePostController);
 //storePost.js
 // app.post("/posts/store", async (req, res) => {
 //   let image = req.files.image;
