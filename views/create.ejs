@@ -39,6 +39,7 @@
                 data-sb-form-api-token="API_TOKEN"
                 action="/posts/store"
                 method="POST"
+                enctype="multipart/form-data"
               >
                 <div class="form-floating">
                   <input
@@ -58,6 +59,18 @@
                     style="height: 12rem"
                   ></textarea>
                   <label>Description</label>
+                </div>
+                <br />
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls">
+                    <label>Image</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="image"
+                      name="image"
+                    />
+                  </div>
                 </div>
                 <br />
                 <!-- Submit success message-->
