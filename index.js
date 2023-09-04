@@ -21,13 +21,17 @@ app.listen(4000, () => {
 
 app.use(
   expressSession({
-    secret: "keyboard cat",
+    secret: "keyboard cat", // Güvenlik nedeniyle gerçek gizli anahtarınızla değiştirin
+    resave: false, // Uyarıyı önlemek için false olarak ayarlayın
+    saveUninitialized: true, // İhtiyaca bağlı olarak true veya false olarak ayarlayın
   })
 );
 
 const authMiddleware = require("./middleware/authMiddleware");
 
 const validateMiddleware = require("./middleware/validationMiddleware.js");
+
+const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticatedMiddleware");
 //validationMiddleware.js
 // const validateMiddleWare = (req, res, next) => {
 //   console.log(req);
@@ -103,13 +107,27 @@ app.post("/posts/store", authMiddleware, storePostController);
 // });
 
 const newUserController = require("./controllers/newUser");
-app.get("/auth/register", newUserController);
+app.get("/auth/register", redirectIfAuthenticatedMiddleware, newUserController);
 
 const storeUserController = require("./controllers/storeUser");
-app.post("/users/register", storeUserController);
+app.post(
+  "/users/register",
+  redirectIfAuthenticatedMiddleware,
+  storeUserController
+);
 
 const loginController = require("./controllers/login");
-app.get("/auth/login", loginController);
+app.get("/auth/login", redirectIfAuthenticatedMiddleware, loginController);
 
 const loginUserController = require("./controllers/loginUser");
-app.post("/users/login", loginUserController);
+app.post(
+  "/users/login",
+  redirectIfAuthenticatedMiddleware,
+  loginUserController
+);
+
+global.loggedIn = null;
+app.use("*", (req, res, next) => {
+  loggedIn = req.session.userId;
+  next();
+});
