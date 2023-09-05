@@ -127,3 +127,8 @@ app.post(
 );
 
 global.loggedIn = false;
+
+const logoutController = require("./controllers/logout");
+app.get("/auth/logout", logoutController);
+
+app.use((req, res) => res.render("notfound"));
