@@ -6,7 +6,12 @@ module.exports = (req, res) => {
       res.redirect("/");
     })
     .catch((error) => {
-      console.log(error);
+      const validationErrors = Object.keys(error.errors).map(
+        (key) => error.errors[key].message
+      );
+      //req.session.validationErrors = validationErrors;
+      req.flash("validationErrors", validationErrors);
+      req.flash("data", req.body);
       res.redirect("/auth/register");
     });
 };

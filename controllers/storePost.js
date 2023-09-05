@@ -13,3 +13,12 @@ module.exports = (req, res) => {
     }
   );
 };
+
+// module.exports = (req, res) => {
+//   async (error) => {
+//     await BlogPost.create({
+//       ...req.body,
+//     });
+//     res.redirect("/");
+//   };
+// };

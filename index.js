@@ -11,6 +11,9 @@ const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 app.use(fileUpload());
 const expressSession = require("express-session");
+var flash = require("connect-flash");
+
+app.use(flash());
 
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
 
