@@ -126,8 +126,4 @@ app.post(
   loginUserController
 );
 
-global.loggedIn = null;
-app.use("*", (req, res, next) => {
-  loggedIn = req.session.userId;
-  next();
-});
+global.loggedIn = false;
