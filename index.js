@@ -15,7 +15,7 @@ var flash = require("connect-flash");
 
 app.use(flash());
 
-mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
+mongoose.connect("", { useNewUrlParser: true });
 
 app.use(express.static("public"));
 app.listen(4000, () => {
